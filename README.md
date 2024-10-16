@@ -60,13 +60,13 @@ To run this project locally:
 1. Clone the repository:
 
     ```bash
-        git clone https://github.com/yourusername/clinic-info-system.git
+        git clone git@github.com:OnsongoMabeya/Simple_hospital_management.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-        cd clinic-info-system
+        cd Simple_hospital_management
     ```
 
 3. Install dependencies:
