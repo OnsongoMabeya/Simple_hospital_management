@@ -1,0 +1,96 @@
+<h2 class="text-2xl font-bold mb-6">Patients</h2>
+
+<!-- Search Bar -->
+<div class="my-4">
+    <input type="text" id="searchInput" placeholder="Search patients Name..." 
+        class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+</div>
+
+<!-- Patient List Table -->
+<table class="w-full table-auto border-collapse">
+    <thead>
+        <tr>
+            <th class="border px-4 py-2">Name</th>
+            <th class="border px-4 py-2">Age</th>
+            <th class="border px-4 py-2">Gender</th>
+        </tr>
+    </thead>
+    <tbody id="patientTableBody">
+        {{#each patients}}
+        <tr class="patientRow">
+            <td class="border px-4 py-2">{{this.name}}</td>
+            <td class="border px-4 py-2">{{this.age}}</td>
+            <td class="border px-4 py-2">{{this.gender}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<script>
+    // JavaScript for live search functionality
+    const searchInput = document.getElementById('searchInput');
+    const patientRows = document.querySelectorAll('.patientRow');
+
+    searchInput.addEventListener('input', function() {
+        const searchQuery = this.value.toLowerCase();
+
+        patientRows.forEach(row => {
+            const patientName = row.querySelector('td:first-child').textContent.toLowerCase();
+            if (patientName.includes(searchQuery)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    // JavaScript for toggling the add patient form visibility
+    function toggleFormVisibility() {
+        const form = document.getElementById('addPatientForm');
+        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+</script>
+
+<!-- Button to Show Add Patient Form -->
+<div class="flex justify-center my-8">
+    <button onclick="toggleFormVisibility()" class="bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        Add Patient
+    </button>
+</div>
+
+<!-- Add New Patient Form (Initially Hidden) -->
+<div id="addPatientForm" class="hidden w-full max-w-md mx-auto bg-white p-6 rounded-md shadow-md">
+    <form action="/add-patient" method="POST" class="space-y-4">
+        <!-- Patient Name -->
+        <div>
+            <label for="name" class="block text-lg font-medium text-gray-700">Patient Name:</label>
+            <input type="text" id="name" name="name" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+
+        <!-- Patient Age -->
+        <div>
+            <label for="age" class="block text-lg font-medium text-gray-700">Patient Age:</label>
+            <input type="number" id="age" name="age" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+
+        <!-- Patient Gender -->
+        <div>
+            <label for="gender" class="block text-lg font-medium text-gray-700">Patient Gender:</label>
+            <select id="gender" name="gender" required
+                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                <option value="" disabled selected>Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit"
+            class="bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            Add Patient
+        </button>
+    </form>
+</div>

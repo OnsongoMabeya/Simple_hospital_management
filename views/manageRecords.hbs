@@ -1,0 +1,172 @@
+<div class="container mx-auto p-8">
+    <h1 class="text-3xl font-bold mb-6">Manage Patient Records</h1>
+
+    <div class="flex space-x-8">
+        <!-- Left Column: Table of patients -->
+        <div class="w-1/2">
+            <h2 class="text-xl font-bold mb-4">All Patients</h2>
+
+            <!-- Search Input Field -->
+            <div class="mb-4">
+                <input type="text" id="searchInput" oninput="filterPatients()" placeholder="Search by name..." class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+            </div>
+
+            <table class="w-full table-auto border-collapse">
+                <thead>
+                    <tr>
+                        <th class="border px-4 py-2">Name</th>
+                        <th class="border px-4 py-2">Age</th>
+                        <th class="border px-4 py-2">Gender</th>
+                    </tr>
+                </thead>
+
+                <tbody id="patientTableBody">
+                    {{#each patients}}
+                    <tr class="patientRow cursor-pointer hover:bg-gray-100" onclick="populatePatientDetails('{{id}}')">
+                        <td class="border px-4 py-2">{{this.name}}</td>
+                        <td class="border px-4 py-2">{{this.age}}</td>
+                        <td class="border px-4 py-2">{{this.gender}}</td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Right Column: Patient Details and Medical Records -->
+        <div class="w-1/2" id="patientDetailsSection">
+            <h2 class="text-xl font-bold mb-4">Patient Details</h2>
+            <div id="patientDetails" class="hidden p-4 bg-white rounded-md shadow-md">
+                <!-- Patient details will be populated here when a patient is clicked -->
+            </div>
+
+            <!-- Button to toggle the medical record form -->
+            <div class="flex justify-end my-4">
+                <button id="toggleFormBtn" onclick="toggleMedicalRecordForm()" class="hidden bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Add Medical Record
+                </button>
+            </div>
+
+            <!-- Medical Record Form (Initially Hidden) -->
+            <div id="medicalRecordForm" class="hidden w-full bg-gray-100 p-4 rounded-md shadow-md">
+                <form id="addMedicalRecordForm" method="POST" class="space-y-4">
+                    <div>
+                        <label for="diagnosis" class="block text-lg font-medium text-gray-700">Diagnosis:</label>
+                        <input type="text" name="diagnosis" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+
+                    <div>
+                        <label for="treatment" class="block text-lg font-medium text-gray-700">Treatment:</label>
+                        <input type="text" name="treatment" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+
+                    <button type="submit"
+                        class="bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                        Add Medical Record
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const patients = {{{json patients}}};  // Assuming patients data is passed from the server
+
+    // Function to filter the patient table in real-time
+    function filterPatients() {
+        const searchInput = document.getElementById('searchInput').value.toLowerCase();
+        const rows = document.querySelectorAll('#patientTableBody .patientRow');
+
+        rows.forEach(row => {
+            const nameCell = row.querySelector('td').textContent.toLowerCase();
+
+            if (nameCell.includes(searchInput)) {
+
+                row.style.display = '';  // Show row
+
+            } else {
+
+                row.style.display = 'none';  // Hide row
+                
+            }
+        });
+    }
+
+    // Function to populate patient details when a row is clicked
+    function populatePatientDetails(patientId) {
+        const patient = patients.find(p => p.id == patientId); // Find patient by ID
+        if (patient) {
+            const detailsSection = document.getElementById('patientDetails');
+            const form = document.getElementById('addMedicalRecordForm');
+            const toggleFormBtn = document.getElementById('toggleFormBtn');
+            const medicalRecords = patient.medicalRecords;
+
+            // Update details section with the selected patient info
+            detailsSection.innerHTML = `
+                <h3 class="text-2xl font-semibold mb-2">${patient.name} (${patient.age}, ${patient.gender})</h3>
+
+                ${medicalRecords.length ? `
+                    <h4 class="text-xl font-semibold">Medical Records:</h4>
+                    
+                    <ul class="list-disc list-inside mt-2">
+                        ${medicalRecords.map(record => `
+                            <li class="text-gray-700">${record.date} - <strong>Diagnosis:</strong> ${record.diagnosis}, <strong>Treatment:</strong> ${record.treatment}</li>
+                        `).join('')}
+                    </ul>
+
+                ` : '<p class="text-lg">No medical records available.</p>'}
+            `;
+            detailsSection.classList.remove('hidden');
+
+            // Set action URL for the form to include patient ID
+            form.action = '/add-medical-record/' + patient.id;
+
+            // Show the button to toggle the medical record form
+            toggleFormBtn.classList.remove('hidden');
+        }
+    }
+
+    // Function to toggle the visibility of the medical record form
+    function toggleMedicalRecordForm() {
+        const form = document.getElementById('medicalRecordForm');
+        form.classList.toggle('hidden');
+    }
+</script>
+
+
+{{!-- {{#each patients}}
+    <div class="mb-8">
+        <h2 class="text-2xl font-semibold">{{name}} ({{age}}, {{gender}})</h2>
+
+        <!-- Medical Records Section -->
+        <h3 class="text-xl font-bold mt-4">Medical Records:</h3>
+        <ul class="list-disc list-inside mt-2 space-y-2">
+            {{#each medicalRecords}}
+            <li class="text-gray-700">{{date}} - <span class="font-semibold">{{diagnosis}}</span> (Treatment: {{treatment}})</li>
+            {{/each}}
+        </ul>
+
+        <!-- Form to add a new medical record -->
+        <form action="/add-medical-record/{{id}}" method="POST" class="mt-4 space-y-4 bg-gray-100 p-4 rounded-md shadow-md">
+            <div>
+                <label for="diagnosis" class="block text-lg font-medium text-gray-700">Diagnosis:</label>
+                <input type="text" name="diagnosis" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+
+            <div>
+                <label for="treatment" class="block text-lg font-medium text-gray-700">Treatment:</label>
+                <input type="text" name="treatment" required
+                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+
+            <button type="submit"
+                class="bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                Add Medical Record
+            </button>
+        </form>
+    </div>
+    <hr class="my-8">
+{{/each}} --}}

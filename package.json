@@ -1,0 +1,24 @@
+{
+  "name": "week-5---group-project---multi-page-application",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npx tailwindcss -i ./src/style.css -o ./public/style.css --minify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "autoprefixer": "^10.4.20",
+    "body-parser": "^1.20.3",
+    "express": "^4.21.0",
+    "express-session": "^1.18.0",
+    "fs": "^0.0.1-security",
+    "hbs": "^4.2.0",
+    "path": "^0.12.7",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.13"
+  }
+}

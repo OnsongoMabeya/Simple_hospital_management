@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Info System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+            extend: {
+                colors: {
+                    clinicBlue: '#0057a3',  // Custom blue color for the clinic theme
+                },
+            },
+            },
+        };
+    </script>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-clinicBlue text-white p-4 shadow-md">
+        <nav class="container mx-auto flex justify-between items-center">
+            <!-- Logo / Brand -->
+            <a href="#" class="text-3xl font-extrabold">Clinic Info System</a>
+            <!-- Navigation Links -->
+            <ul class="flex space-x-6">
+                <li><a href="#" class="hover:text-gray-300 transition-colors">Home</a></li>
+                <li><a href="#" class="hover:text-gray-300 transition-colors">About</a></li>
+                <li><a href="#" class="hover:text-gray-300 transition-colors">Contact</a></li>
+
+                {{#if user}}  <!-- Check if user is logged in -->
+                    <li><a href="/logout" class="text-white hover:text-gray-300">Logout</a></li>
+                {{/if}}
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 flex-grow">
+        {{{body}}}
+    </main>
+
+    <footer class="bg-clinicBlue text-white p-4 text-center">
+        <p class="text-sm">&copy; 2024 Clinic Info System. All rights reserved.</p>
+        <ul class="flex justify-center space-x-6 mt-4">
+            <li><a href="#" class="hover:text-gray-300">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-gray-300">Terms of Service</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
