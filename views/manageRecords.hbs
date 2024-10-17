@@ -8,7 +8,8 @@
 
             <!-- Search Input Field -->
             <div class="mb-4">
-                <input type="text" id="searchInput" oninput="filterPatients()" placeholder="Search by name..." class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                <input type="text" id="searchInput" oninput="filterPatients()" placeholder="Search by name..." 
+                class="block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
             </div>
 
             <table class="w-full table-auto border-collapse">
@@ -41,7 +42,8 @@
 
             <!-- Button to toggle the medical record form -->
             <div class="flex justify-end my-4">
-                <button id="toggleFormBtn" onclick="toggleMedicalRecordForm()" class="hidden bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <button id="toggleFormBtn" onclick="toggleMedicalRecordForm()" 
+                class="hidden bg-blue-500 text-white px-4 py-2 rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
                     Add Medical Record
                 </button>
             </div>
@@ -134,39 +136,3 @@
         form.classList.toggle('hidden');
     }
 </script>
-
-
-{{!-- {{#each patients}}
-    <div class="mb-8">
-        <h2 class="text-2xl font-semibold">{{name}} ({{age}}, {{gender}})</h2>
-
-        <!-- Medical Records Section -->
-        <h3 class="text-xl font-bold mt-4">Medical Records:</h3>
-        <ul class="list-disc list-inside mt-2 space-y-2">
-            {{#each medicalRecords}}
-            <li class="text-gray-700">{{date}} - <span class="font-semibold">{{diagnosis}}</span> (Treatment: {{treatment}})</li>
-            {{/each}}
-        </ul>
-
-        <!-- Form to add a new medical record -->
-        <form action="/add-medical-record/{{id}}" method="POST" class="mt-4 space-y-4 bg-gray-100 p-4 rounded-md shadow-md">
-            <div>
-                <label for="diagnosis" class="block text-lg font-medium text-gray-700">Diagnosis:</label>
-                <input type="text" name="diagnosis" required
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            </div>
-
-            <div>
-                <label for="treatment" class="block text-lg font-medium text-gray-700">Treatment:</label>
-                <input type="text" name="treatment" required
-                    class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-            </div>
-
-            <button type="submit"
-                class="bg-green-500 text-white px-4 py-2 rounded-md shadow hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
-                Add Medical Record
-            </button>
-        </form>
-    </div>
-    <hr class="my-8">
-{{/each}} --}}

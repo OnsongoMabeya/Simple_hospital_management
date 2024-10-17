@@ -2,9 +2,8 @@ const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const fs = require('fs');
-const path = require('path');
-
 const hbs = require('hbs');
+const path = require('path');
 
 const app = express();
 
@@ -107,7 +106,6 @@ app.get('/add-patient', ensureAuthenticated('receptionist'), (req, res) => {
 });
 
 app.post('/add-patient', (req, res) => {
-    // Add patient logic here
     const newPatient = {
         id: Date.now(), // Assign a unique ID using the current timestamp
         name: req.body.name,
@@ -133,9 +131,9 @@ app.post('/add-patient', (req, res) => {
                 console.error('Error saving patient data:', err);
                 return res.status(500).send('Internal Server Error'); // Error handling
             };
-            // res.send('Patient added successfully!');
 
             console.log('New patient added:', newPatient);
+
             // Redirect back to the 'add-patient' page or show success message
             res.redirect('/add-patient');
         });
