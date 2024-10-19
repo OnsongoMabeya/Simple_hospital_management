@@ -80,8 +80,6 @@ function ensureAuthenticated(role) {
             next();
         }
         else {
-            // res.sendStatus(403); // Forbidden
-
             res.redirect('/');
         }
     };
@@ -175,7 +173,6 @@ app.get('/manage-records', ensureAuthenticated('doctor'), (req, res) => {
         }
 
         const patients = JSON.parse(data);
-        // console.log(patients);
 
         res.render('manageRecords', { patients });  // Pass patients to the view
     });
@@ -200,8 +197,8 @@ app.post('/add-medical-record/:id', ensureAuthenticated('doctor'), (req, res) =>
             console.error('Error reading patient data:', err);
             return res.status(500).send('Internal Server Error');
         }
-
-        // const patients = JSON.parse(data);
+        
+        // handling of patients data
         let patients;
         try {
             patients = JSON.parse(data);
@@ -214,8 +211,10 @@ app.post('/add-medical-record/:id', ensureAuthenticated('doctor'), (req, res) =>
         if (patient) {
             patient.medicalRecords.push(newRecord); // Add new record to the patient's medical history
 
-            fs.writeFile(patientsPath, JSON.stringify(patients, null, 2), (err) => {
-            // fsExtra.outputFile(patientsPath, JSON.stringify(patients, null, 2), (err) => {     
+            // Logging new Patients data
+            console.log(patients);
+
+            fs.writeFile(patientsPath, JSON.stringify(patients, null, 2), (err) => {    
                 if (err) {
                     console.error('Error saving patient data:', err);
                     return res.status(500).send('Internal Server Error');
@@ -231,10 +230,6 @@ app.post('/add-medical-record/:id', ensureAuthenticated('doctor'), (req, res) =>
         else (
             console.log('Patient not found')
         )
-
-        // Touch the session to extend its expiration
-        // req.session.user = req.session.user || 'doctor'; // Ensure user remains in session
-        // req.session.touch();
 
         console.log('Session data after saving medical record:', req.session);
     });
