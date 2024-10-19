@@ -1,1 +1,63 @@
-[]
+[
+  {
+    "id": 1729342324043,
+    "name": "John Doe",
+    "age": "23",
+    "gender": "Male",
+    "medicalRecords": [
+      {
+        "date": "2024-10-19",
+        "diagnosis": "HP Lori",
+        "treatment": "Injections"
+      },
+      {
+        "date": "2024-10-19",
+        "diagnosis": "Insomnia",
+        "treatment": "Sleeping pills"
+      }
+    ]
+  },
+  {
+    "id": 1729342336770,
+    "name": "Mary Jane",
+    "age": "34",
+    "gender": "Female",
+    "medicalRecords": [
+      {
+        "date": "2024-10-19",
+        "diagnosis": "Flu",
+        "treatment": "Flu Gone"
+      },
+      {
+        "date": "2024-10-19",
+        "diagnosis": "Fever",
+        "treatment": "Rest and Antibiotics"
+      }
+    ]
+  },
+  {
+    "id": 1729342351290,
+    "name": "Justin M",
+    "age": "56",
+    "gender": "Male",
+    "medicalRecords": []
+  },
+  {
+    "id": 1729342553294,
+    "name": "Chiken",
+    "age": "3",
+    "gender": "Other",
+    "medicalRecords": [
+      {
+        "date": "2024-10-19",
+        "diagnosis": "Not Laying Eggs",
+        "treatment": "Fried Chicken"
+      },
+      {
+        "date": "2024-10-19",
+        "diagnosis": "Want more Chicken",
+        "treatment": "Lay Eggs"
+      }
+    ]
+  }
+]
