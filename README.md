@@ -13,6 +13,7 @@ This project is a multi-page application (MPA) for a small clinic run by a docto
 
 ## Project Structure
 
+```bash
 clinic-info-system/
 ├── views/                  # Handlebars templates
 │ ├── layout.hbs                # Main layout template
@@ -26,6 +27,7 @@ clinic-info-system/
 ├── app.js                  # Main application file
 ├── package.json            # npm config file
 └── package-lock.json
+```
 
 ## Features
 
